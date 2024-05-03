@@ -1,3 +1,11 @@
+# Sydney Hackathon 2024
+
+Submission for the Sydney Hackathon in 2024. Original repo was forked from Scaffold Eth to fast track development with on-chain functionality. 
+
+
+
+
+
 # 🏗 Scaffold-ETH 2
 
 <h4 align="center">
