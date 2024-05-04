@@ -2,7 +2,30 @@
 
 Submission for the Sydney Hackathon in 2024. Original repo was forked from Scaffold Eth to fast track development with on-chain functionality. 
 
+## Tokenised equity
 
+- Listing of businesses
+- Registry of businesses
+- Goverance (Maybe)
+
+- Contract to create the business listing
+    - ABN/ACN
+        - Share data with purchases of NFT
+    - Amount of tokens
+    - Price of tokens
+    - Voting capabilities
+
+- Contract to handle the tasks
+    - Minting 
+    - Tracks performance
+
+- Tracking of the cap table
+    - Ability to list many businesses
+
+Worldcoin to authenticate with levels
+Mantle for connection of RWAs
+
+Unlimit for fiat and crypto
 
 
 
