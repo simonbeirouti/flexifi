@@ -28,6 +28,9 @@ contract BusinessPoolToken is ERC721URIStorage, Ownable {
     }
 
     // Mintable only by the owner of the contract
+
+
+    
     function mintTo(address recipient) public onlyOwner {
         uint256 newTokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
@@ -40,6 +43,9 @@ contract BusinessPoolToken is ERC721URIStorage, Ownable {
     }
 
     // List an NFT for sale
+
+
+
     function listForSale(uint256 tokenId, uint256 price) public {
         require(ownerOf(tokenId) == msg.sender, "You must own the token to list it for sale");
         require(price > 0, "Price must be greater than zero");
@@ -48,7 +54,14 @@ contract BusinessPoolToken is ERC721URIStorage, Ownable {
         emit TokenListedForSale(tokenId, price);
     }
 
+
+
+
     // Function to buy a listed NFT
+
+
+
+
     function buyNFT(uint256 tokenId) public payable {
         TokenSale memory sale = tokenSales[tokenId];
         require(sale.isForSale, "This token is not for sale");
@@ -61,4 +74,7 @@ contract BusinessPoolToken is ERC721URIStorage, Ownable {
         tokenSales[tokenId] = TokenSale(false, 0);
         emit TokenSold(tokenId, seller, msg.sender, msg.value);
     }
+
+
+
 }
