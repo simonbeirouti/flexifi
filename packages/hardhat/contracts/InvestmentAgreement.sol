@@ -45,6 +45,9 @@ contract InvestmentAgreement {
      * @param maturityPeriod The time in seconds until the funds can be released.
      * @param borrower The address of the borrower.
      */
+
+
+    
     function createAgreement(uint256 amount, uint256 interestRate, uint256 maturityPeriod, address payable borrower) external onlyLender {
         uint256 maturityTime = block.timestamp + maturityPeriod;
         agreements[nextAgreementId] = Agreement({
@@ -61,15 +64,23 @@ contract InvestmentAgreement {
         emit AgreementCreated(nextAgreementId, amount, interestRate, maturityTime, borrower);
         nextAgreementId++;
     }
+
+
+
     /**
      * @dev Allows the lender to deposit funds into a specific agreement.
      * @param agreementId The ID of the agreement to deposit funds into.
      */
+
+
+
     function depositFunds(uint256 agreementId) external payable onlyLender {
         Agreement storage agreement = agreements[agreementId];
         require(msg.value == agreement.amount, "Deposit must match the agreement amount.");
         emit FundsDeposited(agreementId, msg.value);
     }
+
+
 
     /**
      * @dev Allows the borrower to offer the agreement for sale, invoking the ROFR.
@@ -77,6 +88,9 @@ contract InvestmentAgreement {
      * @param salePrice The price at which they wish to sell the agreement.
      * @param potentialBuyer The address of the potential buyer who has made an offer.
      */
+
+
+
     function offerForSale(uint256 agreementId, uint256 salePrice, address potentialBuyer) public {
         Agreement storage agreement = agreements[agreementId];
         require(msg.sender == agreement.borrower, "Only the borrower can offer the agreement for sale.");
@@ -89,10 +103,15 @@ contract InvestmentAgreement {
         emit AgreementOfferedForSale(agreementId, salePrice, potentialBuyer);
     }
 
+
+
     /**
      * @dev Allows the lender to accept the offer to buy the agreement, exercising their right of first refusal.
      * @param agreementId The ID of the agreement the lender wishes to buy.
      */
+
+
+
     function buyAgreement(uint256 agreementId) public payable onlyLender {
         Agreement storage agreement = agreements[agreementId];
         require(agreement.isForSale, "This agreement is not for sale.");
@@ -105,10 +124,15 @@ contract InvestmentAgreement {
         emit AgreementSold(agreementId, lender);
     }
 
+
+
     /**
      * @dev Allows the potential buyer to buy the agreement if the lender does not exercise their ROFR.
      * @param agreementId The ID of the agreement they wish to purchase.
      */
+
+
+
     function purchaseAgreement(uint256 agreementId) public payable {
         Agreement storage agreement = agreements[agreementId];
         require(agreement.isForSale, "This agreement is not for sale.");
@@ -122,10 +146,14 @@ contract InvestmentAgreement {
         emit AgreementSold(agreementId, msg.sender);
     }
 
+
+
     /**
      * @dev Allows funds to be released to the borrower if the maturity time has passed, deducting performance and management fees.
      * @param agreementId The ID of the agreement from which funds are to be released.
      */
+
+
     function releaseFunds(uint256 agreementId) external {
         Agreement storage agreement = agreements[agreementId];
         require(block.timestamp >= agreement.maturityTime, "The maturity period has not yet passed.");
@@ -143,4 +171,6 @@ contract InvestmentAgreement {
 
         emit FundsReleased(agreementId, releaseAmount, totalFees);
     }
+
+    
 }
