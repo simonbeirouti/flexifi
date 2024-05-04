@@ -1,30 +1,18 @@
 import React, { Fragment } from "react";
 
 const data = [
-  { name: "0x1234", percentage: 1 },
-  { name: "0x5678", percentage: 2 },
-  { name: "0x2349", percentage: 3 },
-  { name: "0x1234", percentage: 1 },
-  { name: "0x5678", percentage: 2 },
-  { name: "0x2349", percentage: 3 },
-  { name: "0x1234", percentage: 1 },
-  { name: "0x5678", percentage: 2 },
-  { name: "0x2349", percentage: 3 },
-  { name: "0x1234", percentage: 1 },
-  { name: "0x5678", percentage: 2 },
-  { name: "0x2349", percentage: 3 },
-  { name: "0x1234", percentage: 1 },
-  { name: "0x5678", percentage: 2 },
-  { name: "0x2349", percentage: 3 },
-  { name: "0x1234", percentage: 1 },
-  { name: "0x5678", percentage: 2 },
-  { name: "0x2349", percentage: 3 },
-  { name: "0x1234", percentage: 1 },
-  { name: "0x5678", percentage: 2 },
-  { name: "0x2349", percentage: 3 },
+  { name: "0x1234", percentage: 1, color: "#ffc107" },
+  { name: "0x5678", percentage: 2, color: "#28a745" },
+  { name: "0x2349", percentage: 3, color: "#dc3545" },
 ];
 
 const transactions = [
+  { time: "12:30PM", amount: 5000, token: "USDC", link: "https://tx.example.com/123" },
+  { time: "14:45AM", amount: 3000, token: "USDT", link: "https://tx.example.com/456" },
+  { time: "16:00AM", amount: 4500, token: "USDC", link: "https://tx.example.com/789" },
+  { time: "12:30PM", amount: 5000, token: "USDC", link: "https://tx.example.com/123" },
+  { time: "14:45AM", amount: 3000, token: "USDT", link: "https://tx.example.com/456" },
+  { time: "16:00AM", amount: 4500, token: "USDC", link: "https://tx.example.com/789" },
   { time: "12:30PM", amount: 5000, token: "USDC", link: "https://tx.example.com/123" },
   { time: "14:45AM", amount: 3000, token: "USDT", link: "https://tx.example.com/456" },
   { time: "16:00AM", amount: 4500, token: "USDC", link: "https://tx.example.com/789" },
@@ -34,29 +22,32 @@ export default function PortfolioPage() {
   return (
     <Fragment>
       <LiveTrades />
-      <div className="w-full flex flex-wrap px-4">
-        {data.map((item, index) => (
-          <div className="flex mr-2" key={index}>
-            <p className="mr-2">{item.name}</p>
-            <p>{item.percentage}%</p>
-          </div>
-        ))}
+
+      <div className="mx-6">
+        <div className="w-full flex flex-wrap px-2 mb-12">
+          {data.map((item, index) => (
+            <div className="flex items-center bg-gray-300 rounded-lg py-2 px-3 mr-2 text-black" key={index}>
+              <CircleIcon className="mr-1" style={{ color: item.color }} />
+              {item.name} {item.percentage}%
+            </div>
+          ))}
+        </div>
+        <Table />
       </div>
-      <Table />
     </Fragment>
   );
 }
 
 function Table() {
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full overflow-x-auto mb-32">
       <table className="w-full table-auto border-collapse">
-        <thead>
-          <tr className="bg-gray-100 dark:bg-gray-800">
-            <th className="px-4 py-3 text-left font-medium text-gray-700 dark:text-gray-300">Name</th>
-            <th className="px-4 py-3 text-left font-medium text-gray-700 dark:text-gray-300">Email</th>
-            <th className="px-4 py-3 text-left font-medium text-gray-700 dark:text-gray-300">Phone</th>
-            <th className="px-4 py-3 text-left font-medium text-gray-700 dark:text-gray-300">Address</th>
+        <thead className="rounded-lg">
+          <tr className="bg-gray-500">
+            <th className="px-4 py-3 text-left font-medium text-white">Name</th>
+            <th className="px-4 py-3 text-left font-medium text-white">Email</th>
+            <th className="px-4 py-3 text-left font-medium text-white">Phone</th>
+            <th className="px-4 py-3 text-left font-medium text-white">Address</th>
           </tr>
         </thead>
         <tbody>
@@ -86,7 +77,7 @@ function Table() {
 
 function LiveTrades() {
   return (
-    <div className="py-24 sm:py-32">
+    <div className="pt-24 sm:pt-32 pb-12 sm:pb-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl sm:text-center">
           <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">We. Invest.</p>
@@ -95,7 +86,7 @@ function LiveTrades() {
       </div>
       <div className="relative overflow-hidden pt-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="flex flex-col bg-white/30 w-[32rem] h-96 p-2 rounded-md items-center mx-auto">
+          <div className="flex flex-col bg-white/30 w-[32rem] h-96 p-2 rounded-md items-center mx-auto overflow-auto">
             {transactions.map((transaction, index) => (
               <div key={index} className="w-full h-16 bg-gray-300 mb-2 rounded-md flex flex-col text-black">
                 <div className="flex flex-row justify-between m-2">
@@ -110,7 +101,7 @@ function LiveTrades() {
                   </span>
                   <span className="flex justify-between items-center text-lg font-bold mr-4">
                     ${transaction.amount}
-                    {transaction.token}
+                    <span className="ml-1">{transaction.token}</span>
                   </span>
                 </div>
               </div>
@@ -119,5 +110,24 @@ function LiveTrades() {
         </div>
       </div>
     </div>
+  );
+}
+
+function CircleIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="10" />
+    </svg>
   );
 }
